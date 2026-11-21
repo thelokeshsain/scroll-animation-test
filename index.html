@@ -8,14 +8,16 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <header class="site-header">
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
+  <header class="site-header" role="banner">
     <div class="header-inner">
-      <span class="logo">⚙️ TinyDev Toolkit</span>
+      <span class="logo" aria-label="TinyDev Toolkit">⚙️ TinyDev Toolkit</span>
       <p class="tagline">Lightweight browser utilities for developers</p>
     </div>
   </header>
 
-  <main class="container">
+  <main class="container" id="main-content" tabindex="-1">
 
     <!-- ── TAB NAV ── -->
     <nav class="tabs" role="tablist" aria-label="Toolkit sections">
@@ -24,70 +26,84 @@
       <button class="tab-btn"        role="tab" aria-selected="false" aria-controls="panel-case"  id="tab-case"  data-tab="case">Case Converter</button>
     </nav>
 
+    <!-- ── KEYBOARD SHORTCUT HINT ── -->
+    <div class="shortcut-hint" id="shortcut-hint" aria-label="Keyboard shortcuts">
+      <span>⌨ <kbd>Alt</kbd>+<kbd>1</kbd>/<kbd>2</kbd>/<kbd>3</kbd> switch tabs &nbsp;·&nbsp;
+            <kbd>→</kbd>/<kbd>←</kbd> navigate tabs &nbsp;·&nbsp;
+            <kbd>Ctrl</kbd>+<kbd>Enter</kbd> format JSON</span>
+    </div>
+
     <!-- ── JSON FORMATTER ── -->
-    <section class="tab-panel active" id="panel-json" role="tabpanel" aria-labelledby="tab-json">
+    <section class="tab-panel active animate-in" id="panel-json" role="tabpanel" aria-labelledby="tab-json">
       <h2>JSON Formatter &amp; Validator</h2>
       <p class="hint">Paste raw JSON to format and validate it. Errors are highlighted below the output.</p>
 
       <div class="tool-row">
         <div class="col">
           <label for="json-input">Input JSON</label>
-          <textarea id="json-input" placeholder='{"key":"value","arr":[1,2,3]}' spellcheck="false" rows="12"></textarea>
+          <textarea id="json-input" placeholder='{"key":"value","arr":[1,2,3]}' spellcheck="false" rows="12"
+                    aria-describedby="json-status"></textarea>
           <div class="btn-row">
-            <button class="btn btn-primary" id="json-format-btn">Format &amp; Validate</button>
-            <button class="btn btn-ghost"   id="json-clear-btn">Clear</button>
+            <button class="btn btn-primary" id="json-format-btn" aria-label="Format and validate JSON (Ctrl+Enter)">Format &amp; Validate</button>
+            <button class="btn btn-ghost"   id="json-clear-btn"  aria-label="Clear JSON input and output">Clear</button>
           </div>
         </div>
         <div class="col">
           <label for="json-output">Formatted Output</label>
-          <textarea id="json-output" readonly placeholder="Formatted JSON will appear here…" spellcheck="false" rows="12"></textarea>
+          <textarea id="json-output" readonly placeholder="Formatted JSON will appear here…" spellcheck="false" rows="12"
+                    aria-label="Formatted JSON output" aria-readonly="true"></textarea>
           <div class="btn-row">
-            <button class="btn btn-secondary" id="json-copy-btn">Copy Output</button>
+            <button class="btn btn-secondary" id="json-copy-btn" aria-label="Copy formatted JSON to clipboard">Copy Output</button>
           </div>
         </div>
       </div>
 
-      <div id="json-status" class="status-bar" aria-live="polite"></div>
+      <div id="json-status" class="status-bar" role="status" aria-live="polite" aria-atomic="true"></div>
     </section>
 
     <!-- ── WORD COUNTER ── -->
     <section class="tab-panel" id="panel-text" role="tabpanel" aria-labelledby="tab-text" hidden>
       <h2>Text — Character &amp; Word Counter</h2>
-      <p class="hint">Type or paste text to see live statistics.</p>
+      <p class="hint">Type or paste text to see live statistics. Stats update automatically as you type.</p>
 
       <label for="text-input">Your Text</label>
-      <textarea id="text-input" placeholder="Start typing or paste text here…" rows="10"></textarea>
+      <textarea id="text-input" placeholder="Start typing or paste text here…" rows="10"
+                aria-describedby="text-stats-desc"></textarea>
+      <p id="text-stats-desc" class="sr-only">Statistics update live as you type below.</p>
 
-      <div class="stats-grid">
+      <div class="stats-grid" aria-label="Text statistics" role="region">
         <div class="stat-card">
-          <span class="stat-value" id="stat-chars">0</span>
-          <span class="stat-label">Characters</span>
+          <span class="stat-value" id="stat-chars" aria-label="Characters">0</span>
+          <span class="stat-label" aria-hidden="true">Characters</span>
         </div>
         <div class="stat-card">
-          <span class="stat-value" id="stat-chars-ns">0</span>
-          <span class="stat-label">Chars (no spaces)</span>
+          <span class="stat-value" id="stat-chars-ns" aria-label="Characters excluding spaces">0</span>
+          <span class="stat-label" aria-hidden="true">Chars (no spaces)</span>
         </div>
         <div class="stat-card">
-          <span class="stat-value" id="stat-words">0</span>
-          <span class="stat-label">Words</span>
+          <span class="stat-value" id="stat-words" aria-label="Words">0</span>
+          <span class="stat-label" aria-hidden="true">Words</span>
         </div>
         <div class="stat-card">
-          <span class="stat-value" id="stat-lines">0</span>
-          <span class="stat-label">Lines</span>
+          <span class="stat-value" id="stat-lines" aria-label="Lines">0</span>
+          <span class="stat-label" aria-hidden="true">Lines</span>
         </div>
         <div class="stat-card">
-          <span class="stat-value" id="stat-sentences">0</span>
-          <span class="stat-label">Sentences</span>
+          <span class="stat-value" id="stat-sentences" aria-label="Sentences">0</span>
+          <span class="stat-label" aria-hidden="true">Sentences</span>
         </div>
         <div class="stat-card">
-          <span class="stat-value" id="stat-read">0 sec</span>
-          <span class="stat-label">Read time (~200 wpm)</span>
+          <span class="stat-value" id="stat-read" aria-label="Estimated reading time">0 sec</span>
+          <span class="stat-label" aria-hidden="true">Read time (~200 wpm)</span>
         </div>
       </div>
 
+      <!-- Live region for screen-reader stat announcements (debounced) -->
+      <div id="text-live-region" class="sr-only" aria-live="polite" aria-atomic="true"></div>
+
       <div class="btn-row">
-        <button class="btn btn-secondary" id="text-copy-btn">Copy Text</button>
-        <button class="btn btn-ghost"     id="text-clear-btn">Clear</button>
+        <button class="btn btn-secondary" id="text-copy-btn"  aria-label="Copy text to clipboard">Copy Text</button>
+        <button class="btn btn-ghost"     id="text-clear-btn" aria-label="Clear text input">Clear</button>
       </div>
     </section>
 
@@ -97,38 +113,40 @@
       <p class="hint">Type or paste text, then click a conversion button.</p>
 
       <label for="case-input">Input Text</label>
-      <textarea id="case-input" placeholder="Enter text to convert…" rows="6"></textarea>
+      <textarea id="case-input" placeholder="Enter text to convert…" rows="6"
+                aria-describedby="case-status"></textarea>
 
-      <div class="case-btn-grid">
-        <button class="btn btn-primary" data-case="upper">UPPERCASE</button>
-        <button class="btn btn-primary" data-case="lower">lowercase</button>
-        <button class="btn btn-primary" data-case="title">Title Case</button>
-        <button class="btn btn-primary" data-case="sentence">Sentence case</button>
-        <button class="btn btn-primary" data-case="camel">camelCase</button>
-        <button class="btn btn-primary" data-case="pascal">PascalCase</button>
-        <button class="btn btn-primary" data-case="snake">snake_case</button>
-        <button class="btn btn-primary" data-case="kebab">kebab-case</button>
-        <button class="btn btn-primary" data-case="constant">CONSTANT_CASE</button>
-        <button class="btn btn-primary" data-case="alternating">aLtErNaTiNg</button>
+      <div class="case-btn-grid" role="group" aria-label="Case conversion options">
+        <button class="btn btn-primary" data-case="upper"      aria-label="Convert to UPPERCASE">UPPERCASE</button>
+        <button class="btn btn-primary" data-case="lower"      aria-label="Convert to lowercase">lowercase</button>
+        <button class="btn btn-primary" data-case="title"      aria-label="Convert to Title Case">Title Case</button>
+        <button class="btn btn-primary" data-case="sentence"   aria-label="Convert to Sentence case">Sentence case</button>
+        <button class="btn btn-primary" data-case="camel"      aria-label="Convert to camelCase">camelCase</button>
+        <button class="btn btn-primary" data-case="pascal"     aria-label="Convert to PascalCase">PascalCase</button>
+        <button class="btn btn-primary" data-case="snake"      aria-label="Convert to snake_case">snake_case</button>
+        <button class="btn btn-primary" data-case="kebab"      aria-label="Convert to kebab-case">kebab-case</button>
+        <button class="btn btn-primary" data-case="constant"   aria-label="Convert to CONSTANT_CASE">CONSTANT_CASE</button>
+        <button class="btn btn-primary" data-case="alternating" aria-label="Convert to aLtErNaTiNg case">aLtErNaTiNg</button>
       </div>
 
       <div class="tool-row" style="margin-top:1rem;">
         <div class="col">
           <label for="case-output">Converted Output</label>
-          <textarea id="case-output" readonly placeholder="Result will appear here…" rows="6" spellcheck="false"></textarea>
+          <textarea id="case-output" readonly placeholder="Result will appear here…" rows="6" spellcheck="false"
+                    aria-label="Case converted output" aria-readonly="true"></textarea>
           <div class="btn-row">
-            <button class="btn btn-secondary" id="case-copy-btn">Copy Output</button>
-            <button class="btn btn-ghost"     id="case-clear-btn">Clear</button>
+            <button class="btn btn-secondary" id="case-copy-btn"  aria-label="Copy converted text to clipboard">Copy Output</button>
+            <button class="btn btn-ghost"     id="case-clear-btn" aria-label="Clear case converter input and output">Clear</button>
           </div>
         </div>
       </div>
 
-      <div id="case-status" class="status-bar" aria-live="polite"></div>
+      <div id="case-status" class="status-bar" role="status" aria-live="polite" aria-atomic="true"></div>
     </section>
 
   </main>
 
-  <footer class="site-footer">
+  <footer class="site-footer" role="contentinfo">
     <p>TinyDev Toolkit · MIT License · No tracking, no frameworks, no nonsense.</p>
   </footer>
 
